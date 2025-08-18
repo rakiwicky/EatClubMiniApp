@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.dagger)
+    kotlin("kapt")
 }
 
 android {
@@ -40,6 +42,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":feature-resturants"))
     implementation(project(":library-common-compose"))
 
     implementation(libs.androidx.core.ktx)
@@ -50,6 +53,11 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    //Dagger Hilt
+    implementation(libs.dagger.hilt)
+    kapt(libs.dagger.kapt)
+    implementation(libs.hilt.compose.navigation)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
