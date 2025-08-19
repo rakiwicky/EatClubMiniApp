@@ -2,8 +2,10 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.dagger)
+    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.dagger.hilt)
     kotlin("kapt")
+    id("kotlin-parcelize")
 }
 
 android {

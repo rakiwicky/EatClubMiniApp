@@ -6,4 +6,7 @@ internal sealed interface RestaurantsDestination {
 
     @Serializable
     data object ListScreen : RestaurantsDestination
+
+    @Serializable
+    data class DetailScreen(val restaurantId: String) : RestaurantsDestination
 }

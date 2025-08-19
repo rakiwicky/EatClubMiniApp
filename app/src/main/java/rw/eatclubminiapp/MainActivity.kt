@@ -19,14 +19,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val navHostController = rememberNavController()
+            val navController = rememberNavController()
 
             EatClubMiniAppTheme {
                 NavHost(
-                    navController = navHostController,
+                    navController = navController,
                     startDestination = RestaurantsNavGraph
                 ) {
-                    restaurantsNavGraph(navHostController, this@NavHost)
+                    restaurantsNavGraph(navController, this@NavHost)
                 }
             }
         }

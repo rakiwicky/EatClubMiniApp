@@ -5,4 +5,6 @@ import rw.eatclubminiapp.feature.resturants.internal.domain.model.Restaurant
 internal interface RestaurantRepository {
 
     suspend fun getRestaurants(): List<Restaurant>
+
+    suspend fun getRestaurantById(id: String): Restaurant
 }

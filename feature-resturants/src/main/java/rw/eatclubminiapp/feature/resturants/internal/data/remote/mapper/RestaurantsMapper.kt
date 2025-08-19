@@ -23,6 +23,8 @@ private fun RestaurantsDto.RestaurantDto.DealDto.toDeal(): Restaurant.Deal {
         discount = discount,
         dineIn = dineIn,
         lightning = lightning,
+        open = open,
+        close = close,
         qtyLeft = qtyLeft
     )
 }

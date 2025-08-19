@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.dagger)
+    alias(libs.plugins.dagger.hilt)
     kotlin("kapt")
     id("kotlin-parcelize")
 }
@@ -40,6 +40,7 @@ android {
 dependencies {
     implementation(project(":library-network"))
     implementation(project(":library-common-compose"))
+    implementation(project(":library-navigation"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

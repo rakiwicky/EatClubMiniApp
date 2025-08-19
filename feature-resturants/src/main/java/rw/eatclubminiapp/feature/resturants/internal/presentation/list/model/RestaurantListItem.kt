@@ -8,5 +8,5 @@ internal data class RestaurantListItem(
     val cuisines: String,
     val imageLink: String,
     val deals: List<Restaurant.Deal>,
-    val itemOnClick: () -> Unit
+    val itemOnClick: suspend () -> Unit
 )

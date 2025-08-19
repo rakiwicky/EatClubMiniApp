@@ -14,9 +14,11 @@ internal data class Restaurant(
 
     data class Deal(
         val objectId: String,
-        val discount: String?,
+        val discount: Int,
         val dineIn: Boolean?,
         val lightning: Boolean?,
-        val qtyLeft: String
+        val open: String?,
+        val close: String?,
+        val qtyLeft: Int
     )
 }

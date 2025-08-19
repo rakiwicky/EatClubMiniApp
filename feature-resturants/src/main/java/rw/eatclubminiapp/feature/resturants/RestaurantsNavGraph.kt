@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
 import rw.eatclubminiapp.feature.resturants.internal.destination.RestaurantsDestination
+import rw.eatclubminiapp.feature.resturants.internal.presentation.detail.RestaurantDetailScreen
 import rw.eatclubminiapp.feature.resturants.internal.presentation.list.RestaurantListScreen
 
 fun restaurantsNavGraph(
@@ -16,7 +17,11 @@ fun restaurantsNavGraph(
         startDestination = RestaurantsDestination.ListScreen
     ) {
         composable<RestaurantsDestination.ListScreen> {
-            RestaurantListScreen()
+            RestaurantListScreen(navigationController)
+        }
+
+        composable<RestaurantsDestination.DetailScreen> {
+            RestaurantDetailScreen()
         }
     }
 }

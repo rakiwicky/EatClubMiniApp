@@ -8,7 +8,7 @@ internal class RestaurantListItemMapper @Inject constructor() {
 
     fun create(
         restaurants: List<Restaurant>,
-        onItemClick: (Restaurant) -> Unit
+        onItemClick: suspend (Restaurant) -> Unit
     ): List<RestaurantListItem> {
         return restaurants.map {
             RestaurantListItem(
@@ -16,7 +16,7 @@ internal class RestaurantListItemMapper @Inject constructor() {
                 suburb = it.suburb,
                 cuisines = it.cuisines.joinToString(", "),
                 imageLink = it.imageLink,
-                deals = it.deals,
+                deals = it.deals.sortedByDescending { deal -> deal.discount },
                 itemOnClick = { onItemClick(it) }
             )
         }

@@ -19,12 +19,12 @@ internal data class RestaurantsDto(
     ) {
         data class DealDto(
             @SerializedName("objectId") val objectId: String,
-            @SerializedName("discount") val discount: String?,
+            @SerializedName("discount") val discount: Int,
             @SerializedName("dineIn") val dineIn: Boolean?,
             @SerializedName("lightning") val lightning: Boolean?,
             @SerializedName("open") val open: String?,
             @SerializedName("close") val close: String?,
-            @SerializedName("qtyLeft") val qtyLeft: String
+            @SerializedName("qtyLeft") val qtyLeft: Int
         )
     }
 }

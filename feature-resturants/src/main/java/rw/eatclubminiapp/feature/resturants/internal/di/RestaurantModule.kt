@@ -9,8 +9,10 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import rw.eatclubminiapp.feature.resturants.internal.data.remote.api.RestaurantApiService
+import rw.eatclubminiapp.feature.resturants.internal.data.remote.api.RestaurantRemoteDataSource
 import rw.eatclubminiapp.feature.resturants.internal.data.remote.repository.RestaurantRepositoryImpl
 import rw.eatclubminiapp.feature.resturants.internal.domain.repository.RestaurantRepository
+import rw.eatclubminiapp.feature.resturants.internal.domain.usecase.GetRestaurantDetailUseCase
 import rw.eatclubminiapp.feature.resturants.internal.domain.usecase.GetRestaurantsUseCase
 import javax.inject.Singleton
 
@@ -25,6 +27,12 @@ internal abstract class RestaurantModule {
     ): RestaurantRepository
 
     companion object {
+        @Provides
+        @Singleton
+        fun provideRemoteDataSource(api: RestaurantApiService): RestaurantRemoteDataSource {
+            return RestaurantRemoteDataSource(api)
+        }
+
         @Provides
         @Singleton
         fun providesRestaurantApiService(
@@ -43,5 +51,11 @@ internal object UseCaseModule {
     @ViewModelScoped
     fun providesGetRestaurantsUseCase(repository: RestaurantRepository): GetRestaurantsUseCase {
         return GetRestaurantsUseCase(repository)
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun providesGetRestaurantDetailUseCase(repository: RestaurantRepository): GetRestaurantDetailUseCase {
+        return GetRestaurantDetailUseCase(repository)
     }
 }
