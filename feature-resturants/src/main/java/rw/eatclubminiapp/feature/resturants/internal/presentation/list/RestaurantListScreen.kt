@@ -25,7 +25,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
@@ -35,7 +34,7 @@ import rw.eatclubminiapp.library.commoncompose.theme.EatClubMiniAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RestaurantListScreen() {
+internal fun RestaurantListScreen() {
     val viewModel: RestaurantsViewModel = hiltViewModel()
     val layout by viewModel.binding.collectAsState()
 

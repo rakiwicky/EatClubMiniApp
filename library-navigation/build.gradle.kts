@@ -1,15 +1,10 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.dagger)
-    kotlin("kapt")
-    id("kotlin-parcelize")
 }
 
 android {
-    namespace = "rw.eatclubminiapp.feature.resturants"
+    namespace = "com.eatclubminiapp.library.navigation"
     compileSdk = 36
 
     defaultConfig {
@@ -38,33 +33,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":library-network"))
-    implementation(project(":library-common-compose"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-
-    //Dagger Hilt
-    implementation(libs.dagger.hilt)
-    kapt(libs.dagger.kapt)
-    implementation(libs.hilt.compose.navigation)
-
-    //Retrofit
-    implementation(libs.retrofit.core)
-    implementation(libs.retrofit.converter)
-
-    //coroutines
-    implementation(libs.kotlinx.coroutines.android)
-
-    // Coil
-    implementation(libs.coil)
-    implementation(libs.coil.compose)
 
     implementation(libs.kotlinx.serialization)
     implementation(libs.navigation.compose)
