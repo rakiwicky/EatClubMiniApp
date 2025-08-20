@@ -13,7 +13,7 @@ Networking
 - Retrofit
 
 Asynchronous programming
-- Corutines
+- Coroutines
 
 DI
 - Dagger Hilt
