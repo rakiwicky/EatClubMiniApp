@@ -1,7 +1,7 @@
 package rw.eatclubminiapp.feature.resturants.internal.domain.model
 
 internal data class Restaurant(
-    val objectId: String,
+    val id: String,
     val name: String,
     val address1: String,
     val suburb: String,
@@ -13,7 +13,7 @@ internal data class Restaurant(
 ) {
 
     data class Deal(
-        val objectId: String,
+        val id: String,
         val discount: Int,
         val dineIn: Boolean?,
         val lightning: Boolean?,

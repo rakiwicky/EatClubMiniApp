@@ -15,12 +15,27 @@ internal class RestaurantRepositoryImpl @Inject constructor(
     override suspend fun getRestaurants(): List<Restaurant> {
         if (cache.isEmpty()) {
             val fetchedRestaurants = remoteDataSource.getRestaurantDtos().map { it.toRestaurant() }
-            cache.putAll(fetchedRestaurants.associateBy { it.objectId })
+            cache.putAll(fetchedRestaurants.associateBy { it.id })
         }
         return cache.values.toList()
     }
 
     override suspend fun getRestaurantById(id: String): Restaurant {
+        if (cache.isEmpty()) {
+            val fetchedRestaurants = remoteDataSource.getRestaurantDtos().map { it.toRestaurant() }
+            cache.putAll(fetchedRestaurants.associateBy { it.id })
+        }
         return cache[id] ?: throw NoSuchElementException("Restaurant not found")
+    }
+
+    override suspend fun searchRestaurants(searchText: String): List<Restaurant> {
+        if (cache.isEmpty()) {
+            val fetchedRestaurants = remoteDataSource.getRestaurantDtos().map { it.toRestaurant() }
+            cache.putAll(fetchedRestaurants.associateBy { it.id })
+        }
+        return cache.values.toList()
+            .filter { it.name.startsWith(searchText, ignoreCase = true) ||
+                    it.cuisines.any { cuisine -> cuisine.startsWith(searchText) }
+        }
     }
 }

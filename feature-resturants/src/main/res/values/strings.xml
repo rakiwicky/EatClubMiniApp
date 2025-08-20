@@ -1,0 +1,8 @@
+<resources>
+    <string name="feature_restaurants_search_field_placeholder">e.g. chinese, pizza</string>
+    <string name="feature_restaurants_hours">Hours: %1$s - %2$s</string>
+    <string name="feature_restaurants_deals_between">Between %1$s - %2$s</string>
+    <string name="feature_restaurants_deals_left">%1$d Deals Left</string>
+    <string name="feature_restaurants_deals_discount">%1$d%% Off</string>">
+    <string name="feature_restaurants_list_screen_loading_error">Something went wrong.</string>
+</resources>

@@ -5,7 +5,7 @@ import rw.eatclubminiapp.feature.resturants.internal.domain.model.Restaurant
 
 internal fun RestaurantsDto.RestaurantDto.toRestaurant(): Restaurant {
     return Restaurant(
-        objectId = objectId,
+        id = objectId,
         name = name,
         address1 = address1,
         suburb = suburb,
@@ -19,7 +19,7 @@ internal fun RestaurantsDto.RestaurantDto.toRestaurant(): Restaurant {
 
 private fun RestaurantsDto.RestaurantDto.DealDto.toDeal(): Restaurant.Deal {
     return Restaurant.Deal(
-        objectId = objectId,
+        id = objectId,
         discount = discount,
         dineIn = dineIn,
         lightning = lightning,

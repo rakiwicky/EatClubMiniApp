@@ -1,11 +1,14 @@
 package rw.eatclubminiapp.feature.resturants.internal.di
 
+import android.content.Context
+import android.content.res.Resources
 import com.eatclubminiapp.library.network.RestServiceBuilder
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import rw.eatclubminiapp.feature.resturants.internal.data.remote.api.RestaurantApiService
@@ -14,6 +17,7 @@ import rw.eatclubminiapp.feature.resturants.internal.data.remote.repository.Rest
 import rw.eatclubminiapp.feature.resturants.internal.domain.repository.RestaurantRepository
 import rw.eatclubminiapp.feature.resturants.internal.domain.usecase.GetRestaurantDetailUseCase
 import rw.eatclubminiapp.feature.resturants.internal.domain.usecase.GetRestaurantsUseCase
+import rw.eatclubminiapp.feature.resturants.internal.domain.usecase.SearchRestaurantsUseCase
 import javax.inject.Singleton
 
 @Module
@@ -40,6 +44,14 @@ internal abstract class RestaurantModule {
         ): RestaurantApiService {
             return restServiceBuilder.create(RestaurantApiService::class.java)
         }
+
+        @Provides
+        @Singleton
+        fun providesResources(
+            @ApplicationContext context: Context
+        ): Resources {
+            return context.resources
+        }
     }
 }
 
@@ -57,5 +69,11 @@ internal object UseCaseModule {
     @ViewModelScoped
     fun providesGetRestaurantDetailUseCase(repository: RestaurantRepository): GetRestaurantDetailUseCase {
         return GetRestaurantDetailUseCase(repository)
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun providesSearchRestaurantsUseCase(repository: RestaurantRepository): SearchRestaurantsUseCase {
+        return SearchRestaurantsUseCase(repository)
     }
 }

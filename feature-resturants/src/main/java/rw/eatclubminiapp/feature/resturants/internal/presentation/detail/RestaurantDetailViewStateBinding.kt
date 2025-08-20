@@ -10,7 +10,7 @@ internal data class RestaurantDetailViewStateBinding(
         data object Loading: Layout
 
         data class Content(
-            val restaurant: RestaurantDetailItem
+            val restaurantDetailItem: RestaurantDetailItem
         ): Layout
 
         data class Error(val message: String): Layout
