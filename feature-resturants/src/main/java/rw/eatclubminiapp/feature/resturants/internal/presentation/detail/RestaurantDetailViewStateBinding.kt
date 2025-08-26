@@ -3,7 +3,8 @@ package rw.eatclubminiapp.feature.resturants.internal.presentation.detail
 import rw.eatclubminiapp.feature.resturants.internal.presentation.detail.model.RestaurantDetailItem
 
 internal data class RestaurantDetailViewStateBinding(
-    private val layout: Layout
+    val onBackPressed: suspend () -> Unit,
+    val layout: Layout
 ) {
 
     sealed interface Layout {

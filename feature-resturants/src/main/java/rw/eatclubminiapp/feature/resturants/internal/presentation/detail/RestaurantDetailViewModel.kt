@@ -4,7 +4,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import com.eatclubminiapp.library.navigation.NavigationAction
+import com.eatclubminiapp.library.navigation.PopBackStack
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import rw.eatclubminiapp.feature.resturants.internal.destination.RestaurantsDestination
 import rw.eatclubminiapp.feature.resturants.internal.domain.usecase.GetRestaurantDetailUseCase
@@ -17,8 +21,17 @@ internal class RestaurantDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getRestaurantDetailUseCase: GetRestaurantDetailUseCase,
     private val mapper: RestaurantDetailItemMapper,
-    viewState: RestaurantDetailViewState
+    viewStateFactory: RestaurantDetailViewState.Factory
 ): ViewModel() {
+
+    private val _navigationActions = MutableSharedFlow<NavigationAction>()
+    val navigationActions: SharedFlow<NavigationAction> = _navigationActions
+
+    private val viewState = viewStateFactory.create(
+        RestaurantDetailViewState.Callback(
+            onBackPressed = ::onBackPressed
+        )
+    )
 
     private val restaurantId = savedStateHandle.toRoute<RestaurantsDestination.DetailScreen>().restaurantId
 
@@ -36,5 +49,11 @@ internal class RestaurantDetailViewModel @Inject constructor(
                 viewState.render(TargetState.Error(e.message ?: "Something went wrong"))
             }
         }
+    }
+
+    private suspend fun onBackPressed(){
+        _navigationActions.emit(
+            PopBackStack
+        )
     }
 }

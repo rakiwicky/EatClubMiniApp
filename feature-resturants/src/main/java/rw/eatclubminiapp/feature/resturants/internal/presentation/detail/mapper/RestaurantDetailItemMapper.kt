@@ -20,7 +20,7 @@ internal class RestaurantDetailItemMapper @Inject constructor(
                 cuisines = cuisines,
                 openHours = resources.getString(R.string.feature_restaurants_hours, open, close),
                 imageLink = imageLink,
-                deals = deals.map {
+                deals = deals.sortedByDescending { deal -> deal.discount }.map {
                     RestaurantDetailItem.DealItem(
                         discount = resources.getString(R.string.feature_restaurants_deals_discount, it.discount),
                         availabilityInfo =  if (it.open == null || it.close == null) {

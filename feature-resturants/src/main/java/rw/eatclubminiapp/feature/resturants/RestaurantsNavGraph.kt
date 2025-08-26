@@ -21,7 +21,7 @@ fun restaurantsNavGraph(
         }
 
         composable<RestaurantsDestination.DetailScreen> {
-            RestaurantDetailScreen()
+            RestaurantDetailScreen(navigationController)
         }
     }
 }

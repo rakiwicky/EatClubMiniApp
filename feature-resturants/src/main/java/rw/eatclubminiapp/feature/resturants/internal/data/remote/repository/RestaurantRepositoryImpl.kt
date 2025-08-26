@@ -27,15 +27,4 @@ internal class RestaurantRepositoryImpl @Inject constructor(
         }
         return cache[id] ?: throw NoSuchElementException("Restaurant not found")
     }
-
-    override suspend fun searchRestaurants(searchText: String): List<Restaurant> {
-        if (cache.isEmpty()) {
-            val fetchedRestaurants = remoteDataSource.getRestaurantDtos().map { it.toRestaurant() }
-            cache.putAll(fetchedRestaurants.associateBy { it.id })
-        }
-        return cache.values.toList()
-            .filter { it.name.startsWith(searchText, ignoreCase = true) ||
-                    it.cuisines.any { cuisine -> cuisine.startsWith(searchText) }
-        }
-    }
 }

@@ -2,7 +2,6 @@ package rw.eatclubminiapp.feature.resturants.internal.presentation.detail
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -32,6 +31,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
@@ -39,6 +40,11 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
+import kotlinx.coroutines.launch
 import rw.eatclubminiapp.feature.resturants.R
 import rw.eatclubminiapp.feature.resturants.internal.presentation.components.TopActionbar
 import rw.eatclubminiapp.feature.resturants.internal.presentation.detail.RestaurantDetailViewStateBinding.Layout
@@ -46,21 +52,36 @@ import rw.eatclubminiapp.feature.resturants.internal.presentation.detail.model.R
 import rw.eatclubminiapp.library.commoncompose.theme.EatClubMiniAppTheme
 
 @Composable
-internal fun RestaurantDetailScreen() {
+internal fun RestaurantDetailScreen(
+    navigationController: NavController
+) {
 
     val viewModel: RestaurantDetailViewModel = hiltViewModel()
-    val layout by viewModel.binding.collectAsState()
+    val binding by viewModel.binding.collectAsState()
 
-    Screen(layout)
+    Screen(binding)
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(lifecycleOwner.lifecycle) {
+        lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+            viewModel.navigationActions.collect { navigationAction ->
+                navigationAction.performAction(navigationController)
+            }
+        }
+    }
 }
 
 @Composable
-private fun Screen(layout: Layout) {
+private fun Screen(binding: RestaurantDetailViewStateBinding) {
+    val scope = rememberCoroutineScope()
+
     EatClubMiniAppTheme {
         Scaffold(
             modifier = Modifier
                 .background(colorScheme.background),
-            topBar = { TopActionbar() }
+            topBar = { TopActionbar(
+                onBackPressed =  { scope.launch { binding.onBackPressed() } }
+            ) }
         ) { innerPadding ->
             Column(
                 modifier = Modifier
@@ -68,7 +89,7 @@ private fun Screen(layout: Layout) {
                     .padding(innerPadding),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                when (val state = layout) {
+                when (val state = binding.layout) {
                     is Layout.Content -> {
                         val restaurant = state.restaurantDetailItem
 
@@ -239,23 +260,26 @@ private fun cuisinesText(cuisines: List<String>): AnnotatedString {
 @Composable
 private fun Preview_RestaurantDetailScreen() {
     Screen(
-        layout = Layout.Content(
-            restaurantDetailItem = RestaurantDetailItem(
-                name = "The Meatball & Wine Bar",
-                suburb = "Richmond",
-                cuisines = listOf("Pizza, Casual Dining, Vegetarian"),
-                imageLink = "",
-                openHours = "Hours: 12:00PM - 11:00PM",
-                deals = listOf(
-                    RestaurantDetailItem.DealItem(
-                        discount = "30% Off",
-                        availabilityInfo = "Between 12:00 pm - 3:00 pm",
-                        qtyLeft = "10 Deals left"
-                    ),
-                    RestaurantDetailItem.DealItem(
-                        discount = "30% Off",
-                        availabilityInfo = "Between 5:00 pm - 9:00 pm",
-                        qtyLeft = "5 Deals left"
+        binding = RestaurantDetailViewStateBinding(
+            onBackPressed = {},
+            layout = Layout.Content(
+                restaurantDetailItem = RestaurantDetailItem(
+                    name = "The Meatball & Wine Bar",
+                    suburb = "Richmond",
+                    cuisines = listOf("Pizza, Casual Dining, Vegetarian"),
+                    imageLink = "",
+                    openHours = "Hours: 12:00PM - 11:00PM",
+                    deals = listOf(
+                        RestaurantDetailItem.DealItem(
+                            discount = "30% Off",
+                            availabilityInfo = "Between 12:00 pm - 3:00 pm",
+                            qtyLeft = "10 Deals left"
+                        ),
+                        RestaurantDetailItem.DealItem(
+                            discount = "30% Off",
+                            availabilityInfo = "Between 5:00 pm - 9:00 pm",
+                            qtyLeft = "5 Deals left"
+                        )
                     )
                 )
             )

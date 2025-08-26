@@ -7,5 +7,9 @@ internal class SearchRestaurantsUseCase @Inject constructor(
     private val restaurantRepository: RestaurantRepository
 ) {
 
-    suspend operator fun invoke(searchText: String) = restaurantRepository.searchRestaurants(searchText)
+    suspend operator fun invoke(searchText: String) = restaurantRepository.getRestaurants()
+        .filter {
+            it.name.startsWith(searchText, ignoreCase = true) ||
+                    it.cuisines.any { cuisine -> cuisine.startsWith(searchText, ignoreCase = true) }
+        }
 }

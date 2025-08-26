@@ -10,13 +10,13 @@ internal class RestaurantListItemMapper @Inject constructor() {
         restaurants: List<Restaurant>,
         onItemClick: suspend (Restaurant) -> Unit
     ): List<RestaurantListItem> {
-        return restaurants.map {
+        return restaurants.sortedByDescending { restaurant -> restaurant.deals.maxOf { it.discount } }.map {
             RestaurantListItem(
                 name = it.name,
                 suburb = it.suburb,
                 cuisines = it.cuisines.joinToString(", "),
                 imageLink = it.imageLink,
-                deals = it.deals.sortedByDescending { deal -> deal.discount },
+                deals = it.deals,
                 itemOnClick = { onItemClick(it) }
             )
         }
